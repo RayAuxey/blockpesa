@@ -11,6 +11,7 @@ class UserController {
       const savedDoc = await newUser.save();
       return res.status(201).json(savedDoc);
     } catch (error) {
+      console.log(error);
       return res.status(500).json({
         Error: error
       });
@@ -22,6 +23,7 @@ class UserController {
       const docs = await User.find({}).exec();
       return res.status(200).json(docs);
     } catch (error) {
+      console.log(error);
       return res.status(500).json({
         Error: error
       });

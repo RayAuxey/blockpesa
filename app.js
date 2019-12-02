@@ -6,6 +6,9 @@ const express = require("express"),
   config = require("config"),
   app = express();
 
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+
 const PORT = config.get("app.port");
 const db = config.get("db.name");
 
@@ -23,4 +26,20 @@ const accountRoutes = require("./routes/account.routes");
 app.use("/user", userRoutes);
 app.use("/account", accountRoutes);
 
-app.listen(process.env.PORT, () => console.log(`Server listening on Port ${PORT}`));
+http.listen(process.env.PORT, () => console.log(`Server listening on Port ${PORT}`));
+
+const StellarSdk = require('stellar-sdk')
+const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
+
+// Get a message any time a payment occurs. Cursor is set to "now" to be notified
+// of payments happening starting from when this script runs (as opposed to from
+// the beginning of time).
+const es = server.payments()
+  .cursor('now')
+  .stream({
+    onmessage: async (message) => {
+      console.log(message);
+      const {source_account, account} = message;
+      io.emit('transaction', message);
+    }
+  })
