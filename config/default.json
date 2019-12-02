@@ -1,0 +1,8 @@
+{
+  "db": {
+    "name": "BlockPesa"
+  },
+  "app": {
+    "port": 8001
+  }
+}
