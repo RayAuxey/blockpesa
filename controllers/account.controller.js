@@ -41,6 +41,20 @@ class AccountController {
       });
     }
   }
+  static async showAccount(req, res) {
+    try {
+      const { userId , _id} = req.params;
+      const accounts = await Account.findOne({ user: userId , _id })
+        .populate("user")
+        .exec();
+      return res.status(200).json(accounts);
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json({
+        error
+      });
+    }
+  }
 
   static async fundAccount(req, res) {
     try {
@@ -53,6 +67,7 @@ class AccountController {
 
       return res.json(data);
     } catch (error) {
+      console.log(error)
       return res.status(500).json({ error });
     }
   }
@@ -66,16 +81,15 @@ class AccountController {
 
       return res.status(200).json(balances);
     } catch (error) {
+      console.log(error);
       return res.status(500).json({ error });
     }
   }
 
   static async sendMoney(req, res) {
     try {
-      const { from, to, amount } = req.body;
-      const { secretSeed } = await Account.findById(from).exec();
-      const { publicKey: destinationId } = await Account.findById(to).exec();
-
+      const { from: secretSeed, destinationId, amount } = req.body;
+      
       const sendResponse = await StellarController.sendMoney(
         secretSeed,
         destinationId,
@@ -84,6 +98,7 @@ class AccountController {
 
       return res.status(200).json(sendResponse);
     } catch (error) {
+      console.log(error);
       return res.status(500).json({ error });
     }
   }
