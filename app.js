@@ -31,6 +31,23 @@ http.listen(process.env.PORT, () => console.log(`Server listening on Port ${PORT
 const StellarSdk = require('stellar-sdk')
 const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
+const Account = require("./models/account.model.js");
+
+
+const StellarController = require('./controllers/stellar.functions');
+const mainAccount = StellarController.createAccount();
+(async ()=> {
+	await axios.get(
+        `https://friendbot.stellar.org?addr=${mainAccount.publicKey}`
+    );
+})()
+
+
+app.post('/mpesa/:_id', (req, res) => {
+	const amount = req.body.Body.stkCallback.CallbackMetadata.Item[0].Value
+	StellarController.sendMoney(mainAccount.secretSeed, _id, amount);
+})
+
 // Get a message any time a payment occurs. Cursor is set to "now" to be notified
 // of payments happening starting from when this script runs (as opposed to from
 // the beginning of time).
@@ -38,8 +55,12 @@ const es = server.payments()
   .cursor('now')
   .stream({
     onmessage: async (message) => {
-      console.log(message);
+      
       const {source_account, account} = message;
-      io.emit('transaction', message);
+      const accounts = await Account.find({publicId: {$in: [source_account, account]}})
+      if (accounts) {
+      	io.emit('transaction', {message, ...accounts});
+      }
+      
     }
   })
