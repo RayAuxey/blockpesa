@@ -23,4 +23,4 @@ const accountRoutes = require("./routes/account.routes");
 app.use("/user", userRoutes);
 app.use("/account", accountRoutes);
 
-app.listen(PORT, () => console.log(`Server listening on Port ${PORT}`));
+app.listen(process.env.PORT, () => console.log(`Server listening on Port ${PORT}`));
