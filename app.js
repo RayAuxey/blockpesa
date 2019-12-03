@@ -7,7 +7,7 @@ const express = require("express"),
   app = express();
 
 var http = require('http').createServer(app);
-var io = require('socket.io')(http, { origins: '*:*'});
+var io = require('socket.io')(http, { origins: 'http://localhost:8080'});
 
 const PORT = process.env.PORT || 8001;
 const db = config.get("db.name");
