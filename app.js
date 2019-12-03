@@ -77,8 +77,8 @@ const es = server.payments()
   .stream({
     onmessage: async (message) => {
       
-      const {source_account, account} = message;
-      const accounts = await Account.find({publicKey: {$in: [source_account, account]}})
+      const {from, to} = message;
+      const accounts = await Account.find({publicKey: {$in: [from, to]}})
       if (accounts.length > 0) {
         console.log(message);
       	io.emit('transaction', {...message, accounts})
