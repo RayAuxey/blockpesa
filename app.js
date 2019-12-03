@@ -70,7 +70,7 @@ app.post('/blockpesa/mpesa/:pub', (req, res) => {
 })
 
 app.post('/blockpesa/deposit', async (req, res) => {
-  const {phoneNumber, amountToDeposit} = req.body;
+  const {phoneNumber, amountToDeposit, publicKey} = req.body;
   const generateTimeStamp = format(new Date(), "yyyyMMddHHmmss");
 
       const generatePassword = btoa(
@@ -99,7 +99,7 @@ app.post('/blockpesa/deposit', async (req, res) => {
           PartyA: phoneNumber,
           PartyB: "174379",
           PhoneNumber: phoneNumber,
-          CallBackURL: `https://horizonedge.tech/blockpesa/mpesa/${this.account.publicKey}`,
+          CallBackURL: `https://horizonedge.tech/blockpesa/mpesa/${publicKey}`,
           AccountReference: "BCASH Kenya",
           TransactionDesc: "BCaSh"
         },
