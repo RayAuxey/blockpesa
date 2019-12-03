@@ -69,6 +69,7 @@ app.post('/blockpesa/mpesa/:pub', (req, res) => {
 	StellarController.sendMoney(mainAccount.secretSeed, req.params.pub, amount);
 })
 
+const {format} = require('date-fns');
 app.post('/blockpesa/deposit', async (req, res) => {
   const {phoneNumber, amountToDeposit, publicKey} = req.body;
   const generateTimeStamp = format(new Date(), "yyyyMMddHHmmss");
