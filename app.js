@@ -84,8 +84,8 @@ app.post('/blockpesa/deposit', async (req, res) => {
         "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
         {
           auth: {
-            username: "7ZmgrHvcsWwa6r4RmiUaGIePhRWiFF0x",
-            password: "Qnl43P6vJzvgoAyC"
+            username: "V7UPVA8WZcvg4IigMMX2QtK0oxsf6ZBy",
+            password: "UWKKx8ar78BgnDZW"
           }
         }
       );
