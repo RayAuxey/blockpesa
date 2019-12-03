@@ -97,7 +97,7 @@ app.post('/blockpesa/deposit', async (req, res) => {
           Password: generatePassword,
           Timestamp: generateTimeStamp,
           TransactionType: "CustomerPayBillOnline",
-          Amount: amountToDeposit,
+          Amount: ''+amountToDeposit,
           PartyA: phoneNumber,
           PartyB: "174379",
           PhoneNumber: phoneNumber,
