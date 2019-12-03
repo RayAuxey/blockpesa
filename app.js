@@ -78,11 +78,10 @@ const es = server.payments()
     onmessage: async (message) => {
       
       const {source_account, account} = message;
-      const accountInfo = await Account.findOne({publicKey: {$in: [source_account, account]}})
+      const accounts = await Account.find({publicKey: {$in: [source_account, account]}})
       if (accountInfo) {
         console.log(message);
-      	io.emit('transaction', {...message, accountInfo});
-      }
+      	io.emit('transaction', {...message, accounts})
       
     }
   })
