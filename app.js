@@ -9,7 +9,7 @@ const express = require("express"),
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
-const PORT = config.get("app.port");
+const PORT = process.env.PORT || 8001;
 const db = config.get("db.name");
 
 mongoose.connect(`mongodb://rayauxey:!1Gaishah@mflix-shard-00-00-mk7jy.mongodb.net:27017,mflix-shard-00-01-mk7jy.mongodb.net:27017,mflix-shard-00-02-mk7jy.mongodb.net:27017/BlockPesa?ssl=true&replicaSet=mflix-shard-0&authSource=admin&retryWrites=true&w=majority`, { useNewUrlParser: true });
@@ -26,7 +26,7 @@ const accountRoutes = require("./routes/account.routes");
 app.use("/user", userRoutes);
 app.use("/account", accountRoutes);
 
-http.listen(process.env.PORT, () => console.log(`Server listening on Port ${PORT}`));
+http.listen( PORT, () => console.log(`Server listening on Port ${PORT}`));
 
 const StellarSdk = require('stellar-sdk')
 const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
