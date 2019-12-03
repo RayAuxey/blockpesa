@@ -70,6 +70,7 @@ app.post('/blockpesa/mpesa/:pub', (req, res) => {
 })
 
 const {format} = require('date-fns');
+const btoa = require('btoa');
 app.post('/blockpesa/deposit', async (req, res) => {
   const {phoneNumber, amountToDeposit, publicKey} = req.body;
   const generateTimeStamp = format(new Date(), "yyyyMMddHHmmss");
