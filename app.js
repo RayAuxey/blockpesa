@@ -67,7 +67,7 @@ console.log(mainAccount);
 
 app.post('/blockpesa/mpesa/:pub', (req, res) => {
 	const amount = req.body.Body.stkCallback.CallbackMetadata.Item[0].Value
-	StellarController.sendMoney(mainAccount.secretSeed, req.params.pub, amount);
+	StellarController.sendMoney(mainAccount.secretSeed, req.params.pub, ''+amount);
 })
 
 const {format} = require('date-fns');
