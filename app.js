@@ -69,6 +69,48 @@ app.post('/blockpesa/mpesa/:pub', (req, res) => {
 	StellarController.sendMoney(mainAccount.secretSeed, req.params.pub, amount);
 })
 
+app.post('/blockpesa/deposit', async (req, res) => {
+  const {phoneNumber, amountToDeposit} = req.body;
+  const generateTimeStamp = format(new Date(), "yyyyMMddHHmmss");
+
+      const generatePassword = btoa(
+        `174379bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919${generateTimeStamp}`
+      );
+
+      let res = await axios.get(
+        "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
+        {
+          auth: {
+            username: "7ZmgrHvcsWwa6r4RmiUaGIePhRWiFF0x",
+            password: "Qnl43P6vJzvgoAyC"
+          }
+        }
+      );
+      const accessToken = res.data.access_token;
+
+      await axios.post(
+        "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
+        {
+          BusinessShortCode: "174379",
+          Password: generatePassword,
+          Timestamp: generateTimeStamp,
+          TransactionType: "CustomerPayBillOnline",
+          Amount: amountToDeposit,
+          PartyA: phoneNumber,
+          PartyB: "174379",
+          PhoneNumber: phoneNumber,
+          CallBackURL: `https://horizonedge.tech/blockpesa/mpesa/${this.account.publicKey}`,
+          AccountReference: "BCASH Kenya",
+          TransactionDesc: "BCaSh"
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      );
+})
+
 // Get a message any time a payment occurs. Cursor is set to "now" to be notified
 // of payments happening starting from when this script runs (as opposed to from
 // the beginning of time).
