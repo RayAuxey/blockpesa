@@ -79,7 +79,7 @@ const es = server.payments()
       
       const {source_account, account} = message;
       const accounts = await Account.find({publicKey: {$in: [source_account, account]}})
-      if (accountInfo) {
+      if (accounts) {
         console.log(message);
       	io.emit('transaction', {...message, accounts})
       }
