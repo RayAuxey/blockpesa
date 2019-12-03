@@ -29,7 +29,7 @@ class StellarController {
 
   static async transactions(publicKey) {
     const res = await server.transactions()
-    .forAccount(accountId)
+    .forAccount(publicKey)
     .call()
     return res.records;
   }
