@@ -8,7 +8,7 @@ const express = require("express"),
 
 var http = require('http').createServer(app);
 var io = require('socket.io')(http, {
-  path: '/blockpesa',
+  path: '/blockpesa/io',
 });
 
 const PORT = process.env.PORT || 8001;
