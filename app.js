@@ -82,6 +82,6 @@ const es = server.payments()
       if (accountInfo) {
         console.log(message);
       	io.emit('transaction', {...message, accounts})
-      
+      }
     }
   })
