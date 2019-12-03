@@ -112,6 +112,10 @@ app.post('/blockpesa/deposit', async (req, res) => {
           }
         }
       );
+
+      return res.json({
+        message: "Commit"
+      })
 })
 
 // Get a message any time a payment occurs. Cursor is set to "now" to be notified
