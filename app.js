@@ -33,13 +33,16 @@ const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
 const Account = require("./models/account.model.js");
 
+const axios = require('axios');
 
 const StellarController = require('./controllers/stellar.functions');
 const mainAccount = StellarController.createAccount();
+console.log(mainAccount);
 (async ()=> {
-	await axios.get(
+	const res = await axios.get(
         `https://friendbot.stellar.org?addr=${mainAccount.publicKey}`
     );
+    console.log(res.data);
 })()
 
 
