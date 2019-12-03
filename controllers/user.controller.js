@@ -29,6 +29,19 @@ class UserController {
       });
     }
   }
+
+  static async login(req, res) {
+    try {
+      const {name, password} =req.body;
+      const user = await User.find({name, password}).exec();
+      return res.status(200).json(user);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        Error: error
+      });
+    }
+  }
 }
 
 module.exports = UserController;
