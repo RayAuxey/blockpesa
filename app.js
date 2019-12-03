@@ -78,7 +78,7 @@ app.post('/blockpesa/deposit', async (req, res) => {
         `174379bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919${generateTimeStamp}`
       );
 
-      let res = await axios.get(
+      let response = await axios.get(
         "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
         {
           auth: {
@@ -87,7 +87,7 @@ app.post('/blockpesa/deposit', async (req, res) => {
           }
         }
       );
-      const accessToken = res.data.access_token;
+      const accessToken = response.data.access_token;
 
       await axios.post(
         "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
