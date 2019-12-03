@@ -23,8 +23,8 @@ app.use(cors());
 const userRoutes = require("./routes/user.routes");
 const accountRoutes = require("./routes/account.routes");
 
-app.use("/user", userRoutes);
-app.use("/account", accountRoutes);
+app.use("/blockpesa/user", userRoutes);
+app.use("/blockpesa/account", accountRoutes);
 
 http.listen( PORT, () => console.log(`Server listening on Port ${PORT}`));
 
@@ -46,7 +46,7 @@ console.log(mainAccount);
 })()
 
 
-app.post('/mpesa/:_id', (req, res) => {
+app.post('/blockpesa/mpesa/:_id', (req, res) => {
 	const amount = req.body.Body.stkCallback.CallbackMetadata.Item[0].Value
 	StellarController.sendMoney(mainAccount.secretSeed, _id, amount);
 })
