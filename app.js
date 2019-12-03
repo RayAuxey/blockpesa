@@ -98,9 +98,9 @@ app.post('/blockpesa/deposit', async (req, res) => {
           Timestamp: generateTimeStamp,
           TransactionType: "CustomerPayBillOnline",
           Amount: ''+amountToDeposit,
-          PartyA: phoneNumber,
+          PartyA: ''+phoneNumber,
           PartyB: "174379",
-          PhoneNumber: phoneNumber,
+          PhoneNumber: ''+phoneNumber,
           CallBackURL: `https://horizonedge.tech/blockpesa/mpesa/${publicKey}`,
           AccountReference: "BCASH Kenya",
           TransactionDesc: "BCaSh"
