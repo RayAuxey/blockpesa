@@ -104,6 +104,18 @@ class AccountController {
       return res.status(500).json({ error });
     }
   }
+  static async getTransactions(req, res) {
+    try {
+      const { publicKey } = req.params;
+      
+      const transactions = await StellarController.transactions(publicKey)
+
+      return res.status(200).json(transactions);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error });
+    }
+  }
 }
 
 module.exports = AccountController;

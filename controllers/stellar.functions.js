@@ -27,6 +27,13 @@ class StellarController {
     }
   }
 
+  static async transactions(publicKey) {
+    const res = await server.transactions()
+    .forAccount(accountId)
+    .call()
+    return res.records;
+  }
+
   static async sendMoney(secretSeed, destinationId, amount) {
     const sourceKeys = StellarSdk.Keypair.fromSecret(secretSeed);
     let transaction;

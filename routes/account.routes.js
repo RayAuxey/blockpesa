@@ -8,5 +8,6 @@ router.get("/acc/:userId/:_id", AccountController.showAccount);
 router.get("/fund/:id", AccountController.fundAccount);
 router.get("/balance/:id", AccountController.getBalances);
 router.post("/transfer", AccountController.sendMoney);
+router.get("/transactions/:publicKey", AccountController.getTransactions);
 
 module.exports = router;
