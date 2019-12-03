@@ -7,7 +7,7 @@ const express = require("express"),
   app = express();
 
 var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')(http, { origins: '*:*'});
 
 const PORT = process.env.PORT || 8001;
 const db = config.get("db.name");
@@ -21,19 +21,10 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const whitelist = ['http://localhost']
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
 
 
-app.use(cors(corsOptions));
+
+app.use(cors());
 
 // Routers
 const userRoutes = require("./routes/user.routes");
