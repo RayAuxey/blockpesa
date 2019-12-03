@@ -14,10 +14,26 @@ const db = config.get("db.name");
 
 mongoose.connect(`mongodb://rayauxey:!1Gaishah@mflix-shard-00-00-mk7jy.mongodb.net:27017,mflix-shard-00-01-mk7jy.mongodb.net:27017,mflix-shard-00-02-mk7jy.mongodb.net:27017/BlockPesa?ssl=true&replicaSet=mflix-shard-0&authSource=admin&retryWrites=true&w=majority`, { useNewUrlParser: true });
 
+
+
+
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
+
+const whitelist = ['http://localhost']
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
+
+app.use(cors(corsOptions));
 
 // Routers
 const userRoutes = require("./routes/user.routes");
@@ -46,9 +62,9 @@ console.log(mainAccount);
 })()
 
 
-app.post('/blockpesa/mpesa/:_id', (req, res) => {
+app.post('/blockpesa/mpesa/:pub', (req, res) => {
 	const amount = req.body.Body.stkCallback.CallbackMetadata.Item[0].Value
-	StellarController.sendMoney(mainAccount.secretSeed, _id, amount);
+	StellarController.sendMoney(mainAccount.secretSeed, req.params.pub, amount);
 })
 
 // Get a message any time a payment occurs. Cursor is set to "now" to be notified
