@@ -37,6 +37,7 @@ var corsOptions = {
 
 app.use(cors());
 
+app.use(express.static('spa'))
 // Routers
 const userRoutes = require("./routes/user.routes");
 const accountRoutes = require("./routes/account.routes");
